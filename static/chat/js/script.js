@@ -75,3 +75,58 @@ $(document).ready(function() {
     });
 
 });
+
+
+// Capture audio from the user's microphone
+function captureAudio() {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(function(stream) {
+            // Initialize MediaRecorder
+            var mediaRecorder = new MediaRecorder(stream);
+            var chunks = [];
+
+            mediaRecorder.ondataavailable = function(event) {
+                chunks.push(event.data);
+            };
+
+            mediaRecorder.onstop = function() {
+                // Convert recorded audio chunks to a Blob
+                var audioBlob = new Blob(chunks, { type: 'audio/wav' });
+                
+                // Send the recorded audio Blob to the Django backend
+                sendAudioToBackend(audioBlob);
+            };
+
+            // Start recording audio
+            mediaRecorder.start();
+
+            // Stop recording after a certain duration (e.g., 10 seconds)
+            setTimeout(function() {
+                mediaRecorder.stop();
+            }, 10000);
+        })
+        .catch(function(error) {
+            console.error('Error accessing microphone:', error);
+        });
+}
+
+// Send recorded audio data to the Django backend
+function sendAudioToBackend(audioBlob) {
+    var formData = new FormData();
+    formData.append('audio', audioBlob);
+
+    fetch('/predict/', {
+        method: 'POST',
+        body: formData
+    })
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        // Handle prediction results returned by the backend
+        console.log('Prediction:', data.prediction);
+    })
+    .catch(function(error) {
+        console.error('Error sending audio to backend:', error);
+    });
+}

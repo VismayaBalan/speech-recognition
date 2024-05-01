@@ -8,13 +8,13 @@
             <p style="color: black; font-size: 18px">
                     Username: <b style="color: white;">{{ user.username }}</b>
             </p>
-            <p style="color: black; font-size: 18px">
+            <!-- <p style="color: black; font-size: 18px">
                     Total Messages:  <b style="color: white;">{{ chat|length }}</b>
             </p>
+ -->
+            <!-- <br> -->
 
-            <br>
-
-            <h5 style="color: black; font-size: 18px">
+            <!-- <h5 style="color: black; font-size: 18px">
                 Users who participated in chat
             </h5>
 
@@ -22,7 +22,7 @@
                 <p>
                     User Name:  <b style="color: white;">{{ obj.username }}</b>
                 </p>
-            {% endfor %}
+            {% endfor %} -->
 
         {% endif %}
         </div>
@@ -30,7 +30,7 @@
         <div class="col-lg-8">
         <div class="container">
             <div id="chat-body" class="panel panel-default">
-                <div class="panel-heading" style="color: white; background: darkblue">Speech to text Chat Box</div>
+                <div class="panel-heading" style="color: white; background: darkblue">Predicted Word</div>
                 <div id="msg-list-div" class="panel-body">
                     <ul id="msg-list" class="list-group">
                         {% for obj in chat %}
@@ -49,7 +49,7 @@
 
             <br>
 
-            <h3> Send Message </h3>
+            <!-- <h3> Send Message </h3>
 
             <form id="chat-form" method="post" action="{% url 'chat:post' %}" >
                 {% csrf_token %}
@@ -61,7 +61,7 @@
                     <input class="btn btn-default" id="send" type="submit" style="color: darkblue; padding: 16px" value="Send"/>
                 </span>
                 </div>
-            </form>
+            </form> -->
 
             <article>
             <header style="text-align: center;">
@@ -73,7 +73,7 @@
 
                 <br>
                 <h3>
-                    Send Message: Speech to text
+                    Speech to text
                 </h3>
                 <button id="start-recording">Start</button>
                 <button id="stop-recording" disabled>Stop</button>
